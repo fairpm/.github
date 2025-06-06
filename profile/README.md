@@ -1,6 +1,6 @@
 # Welcome to the FAIR Package Manager Project
 
-The FAIR Package Manager is an open-source project under the Linux Foundation umbrella. We are committed to reimagining software distribution and governance in open source web publishing. We champion decentralization, transparency, and user autonomy, bringing together a diverse community of developers, infrastructure providers, and open web advocates who share a common mission: to reduce reliance on centralized services and create agency for site owners and hosting providers.
+The FAIR Package Manager is an open-source initiative backed by the Linux Foundation. Our goal is to rethink how software is distributed and managed in the world of open web publishing. We focus on decentralization, transparency, and giving users more control. Our community brings together developers, infrastructure providers, and open web contributors and advocates who all share the same mission: to move away from centralized systems and empower site owners and hosting providers with greater independence.
 
 FAIR is governed through open working groups and consensus-driven processes, ensuring that its development reflects the needs of the broader community. Whether you're a contributor, a host, or an end user, FAIR invites participation at every level, from writing code and documentation, to community organisation and governance. As a community-led project, we aim to build public digital infrastructure that is both resilient and fair.
 
