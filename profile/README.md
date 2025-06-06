@@ -14,7 +14,7 @@ There are two core pillars of the FAIR system:
 
 * **Decentralized Package Management:** FAIR introduces a new package distribution model for themes and plugins. It supports opt-in packages that use the FAIR protocol and enables hosts to configure their own mirrors for plugin/theme data using AspirePress or their own domains. While stable plugins currently use mirrors of WordPress.org, future versions will fully support FAIR-native packages.
 
-[**Ready to try FAIR? Download the plugin now →**](https://github.com/fairpm/fair-plugin)
+[**Ready to try FAIR? Download the plugin now →**](https://github.com/fairpm/fair-plugin/releases)
 
 Hosts can distribute FAIR to their customers via:
 
