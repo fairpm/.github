@@ -4,9 +4,9 @@
 
 # General Questions
 
-## How do I use this?
+## How do I use this on my site?
 
-Our MVP product is a WordPress plugin, the FAIR Plugin. You can install it just like you would any other plugin.
+Our minimum vialbe product (MVP) is a WordPress plugin, the FAIR Plugin. You can install it just like you would any other plugin.
 
 You can download the latest version from the [FAIR Plugin releases page](https://github.com/fairpm/fair-plugin/releases).
 
@@ -32,7 +32,7 @@ No. The plugin and theme repository mirroring part of FAIR currently uses Aspire
 
 ## If you use AspirePress, how does AspirePress handle load to avoid overwhelming WordPress.org?
 
-AspireSync, used by AspirePress, employs strict rate-limiting (no more than 10 simultaneous requests) and pauses to minimize impact. WordPress.org also has its own traffic shaping measures to manage potential overloads.
+AspireSync, used by AspirePress to fetch WordPress.org data, employs strict rate-limiting (no more than 10 simultaneous requests) and pauses to minimize impact. WordPress.org also has its own traffic shaping measures to manage potential overloads.
 
 The FAIR and AspirePress projects will allow anyone who wants to set up their mirror to get their initial data from us rather than from WordPress.org, to protect .org.
 
@@ -50,7 +50,7 @@ Right now, there is no way to add your plugins (or themes) for distribution. Our
 
 ## How will this distribution work?
 
-The [FAIR Protocol](https://github.com/fairpm/fair-protocol) is being refined, but it is based on AtProto (used by BlueSky). We recommend familiarizing yourself with the documentation.
+The [FAIR Protocol](https://github.com/fairpm/fair-protocol) is being refined, but it is based on [AtProto](https://atproto.com/) (used by BlueSky). We recommend familiarizing yourself with the documentation.
 
 # Trust and Transparency 
 
