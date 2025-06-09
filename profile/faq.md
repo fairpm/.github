@@ -6,7 +6,7 @@
 
 ## How do I use this on my site?
 
-Our minimum vialbe product (MVP) is a WordPress plugin, the FAIR Plugin. You can install it just like you would any other plugin.
+Our minimum viable product (MVP) is a WordPress plugin, the FAIR Plugin. You can install it just like you would any other plugin.
 
 You can download the latest version from the [FAIR Plugin releases page](https://github.com/fairpm/fair-plugin/releases).
 
