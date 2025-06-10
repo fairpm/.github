@@ -6,11 +6,11 @@ FAIR is governed through open working groups and consensus-driven processes, ens
 
 ### 🚀 Technology
 
-The FAIR Package Manager is a decentralized alternative to the central WordPress.org plugin and theme ecosystem, designed to return control to WordPress hosts and developers. It operates as a drop-in WordPress plugin, seamlessly replacing existing centralized services with a federated, open-source infrastructure.
+The FAIR Package Manager is a decentralized alternative to the central WordPress.org plugin and theme ecosystem. Services on WordPress.org are expensive to maintain and centralized. In order to help strengthen the future of the whole WordPress ecosystem, FAIR was built to reduce reliance and burden on the central WordPress.org services. It operates as a drop-in WordPress plugin, seamlessly replacing existing centralized services with a federated, open-source infrastructure.
 
 There are two core pillars of the FAIR system:
 
-* **API Replacement:** It replaces communication with WordPress.org APIs (such as update checks and event feeds) using local or FAIR-governed alternatives. Some features—like browser version checks—are handled entirely within the plugin using embedded logic (e.g., browserslist).
+* **API Replacement:** FAIR provides replacement implementations of the key services that are currently centralized on WordPress.org. It replaces services such as update checks and event feeds with local or FAIR-governed alternatives. Some features—like browser version checks—are handled entirely within the plugin using embedded logic (e.g., browserslist).
 
 * **Decentralized Package Management:** FAIR introduces a new package distribution model for themes and plugins. It supports opt-in packages that use the FAIR protocol and enables hosts to configure their own mirrors for plugin/theme data using AspirePress or their own domains. While stable plugins currently use mirrors of WordPress.org, future versions will fully support FAIR-native packages.
 
@@ -40,7 +40,7 @@ Hosts may also configure their own repository mirrors and toggle settings like G
 
 #### [Technical Independence](https://github.com/fairpm/fair-plugin)
 
-* Focus: Create infrastructure to disconnect from WordPress.org.
+* Focus: Create infrastructure to provide federated implementations of the WordPress.org services.
 * Includes: Mirror API server, FAIR-enabled plugin, and WP distro packaging.
 
 #### [FAIR](https://github.com/fairpm/fair-protocol)
