@@ -25,11 +25,12 @@ Hosts may also configure their own repository mirrors and toggle settings like G
 
 ### 📚 Learn about the project
 
-* [Getting Started Guide](https://github.com/fairpm/tsc/blob/main/getting-started.md) - start here to learn about getting involved with the project!
-* [Contributing Guide](https://github.com/fairpm/tsc/blob/main/contributing.md) - learn about the project structure, Technical Steering Committee (TSC), working groups, governance process
-* [Technical Steering Committee Charter](https://github.com/fairpm/tsc/blob/main/charter.md) - our charter outlines our governance model
-* [Code of Conduct](https://github.com/fairpm/tsc/blob/main/code-of-conduct.md) - our code of conduct outlines how we keep our open source project welcoming and safe
-* [Working Groups](https://github.com/fairpm/tsc/tree/main/working-groups) - Learn about our current project focuses
+* [Getting Started Guide](https://github.com/fairpm/tsc/blob/main/getting-started.md) - Start here to learn about getting involved with the project!
+* [Contributing Guide](https://github.com/fairpm/tsc/blob/main/contributing.md) - Learn about the project structure, Technical Steering Committee (TSC), working groups and the governance process.
+* [Technical Steering Committee Charter](https://github.com/fairpm/tsc/blob/main/charter.md) - Our charter outlines our governance model.
+* [Code of Conduct](https://github.com/fairpm/tsc/blob/main/code-of-conduct.md) - Our code of conduct outlines how we keep our open source project welcoming and safe.
+* [Working Groups](https://github.com/fairpm/tsc/tree/main/working-groups) - Learn about our current project focuses.
+* [FAQ](https://github.com/fairpm/tsc/blob/main/faqs/README.md) - Our FAQ. Because sometimes, starting with someone else's questions is easiest.
 
 ### ✏️ Working Groups Overview
 
