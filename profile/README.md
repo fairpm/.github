@@ -25,7 +25,7 @@ Hosts may also configure their own repository mirrors and toggle settings like G
 
 ### 📚 Learn about the project
 
-* Getting Started Guide - start here to learn about getting involved with the project!
+* [Getting Started Guide](https://github.com/fairpm/tsc/blob/main/getting-started.md) - start here to learn about getting involved with the project!
 * [Contributing Guide](https://github.com/fairpm/tsc/blob/main/contributing.md) - learn about the project structure, Technical Steering Committee (TSC), working groups, governance process
 * [Technical Steering Committee Charter](https://github.com/fairpm/tsc/blob/main/charter.md) - our charter outlines our governance model
 * [Code of Conduct](https://github.com/fairpm/tsc/blob/main/code-of-conduct.md) - our code of conduct outlines how we keep our open source project welcoming and safe
