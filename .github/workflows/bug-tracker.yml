@@ -34,7 +34,7 @@ jobs:
           repo-token: ${{ secrets.PROJECT_PAT }}
           repo-name: ${{ matrix.repo }}
   
-   add_bug_to_project:
+  add_bug_to_project:
     if: github.event.label.name == 'bug' || contains(github.event.issue.labels.*.name, 'bug')
     runs-on: ubuntu-latest
     steps:
