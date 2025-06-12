@@ -1,0 +1,46 @@
+name: Bug tracker
+
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  get-org-repos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: austenstone/get-org-repos@main
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+        id: get-org-repos
+    outputs:
+      repos: ${{ steps.get-org-repos.outputs.repos }}
+
+  sync:
+    needs:
+      - get-org-repos
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: ${{ fromJson(needs.get-org-repos.outputs.repos) }}
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@main
+        with:
+          repository: ${{ github.event.organization.login }}/${{ matrix.repo }}
+          token: ${{ secrets.GH_TOKEN }}
+      - uses: amenocal/stale@main
+        with:
+          repo-token: ${{ secrets.GH_TOKEN }}
+          repo-name: ${{ matrix.repo }}
+  
+   add_bug_to_project:
+    if: github.event.label.name == 'bug' || contains(github.event.issue.labels.*.name, 'bug')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add issue to project
+        uses: actions/add-to-project@v1
+        with:
+          project-url: https://github.com/orgs/fairpm/projects/2
+          github-token: ${{ secrets.PROJECT_PAT }}
+          labeled: bug  
