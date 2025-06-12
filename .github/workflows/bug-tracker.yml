@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: austenstone/get-org-repos@main
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.PROJECT_PAT }}
         id: get-org-repos
     outputs:
       repos: ${{ steps.get-org-repos.outputs.repos }}
@@ -28,10 +28,10 @@ jobs:
       - uses: actions/checkout@main
         with:
           repository: ${{ github.event.organization.login }}/${{ matrix.repo }}
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ secrets.PROJECT_PAT }}
       - uses: amenocal/stale@main
         with:
-          repo-token: ${{ secrets.GH_TOKEN }}
+          repo-token: ${{ secrets.PROJECT_PAT }}
           repo-name: ${{ matrix.repo }}
   
    add_bug_to_project:
