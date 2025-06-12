@@ -33,14 +33,14 @@ jobs:
         with:
           repo-token: ${{ secrets.PROJECT_PAT }}
           repo-name: ${{ matrix.repo }}
-  
   add_bug_to_project:
-    if: matrix.repo.github.event.label.name == 'bug' || contains(matrix.repo.github.event.issue.labels.*.name, 'bug')
+    if: github.event_name == 'issues' && (github.event.label.name == 'bug' || contains(github.event.issue.labels.*.name, 'bug'))
     runs-on: ubuntu-latest
     steps:
-      - name: Add issue to project
-        uses: actions/add-to-project@v1
-        with:
-          project-url: https://github.com/orgs/fairpm/projects/5
-          github-token: ${{ secrets.PROJECT_PAT }}
-          labeled: bug  
+    - name: Add issue to project
+      uses: actions/add-to-project@v1
+      with:
+        project-url: https://github.com/orgs/fairpm/projects/5
+        github-token: ${{ secrets.PROJECT_PAT }}
+        labeled: bug
+        
