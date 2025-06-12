@@ -35,7 +35,7 @@ jobs:
           repo-name: ${{ matrix.repo }}
   
   add_bug_to_project:
-    if: github.event.label.name == 'bug' || contains(github.event.issue.labels.*.name, 'bug')
+    if: matrix.repo.github.event.label.name == 'bug' || contains(matrix.repo.github.event.issue.labels.*.name, 'bug')
     runs-on: ubuntu-latest
     steps:
       - name: Add issue to project
