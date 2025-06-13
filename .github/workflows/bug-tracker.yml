@@ -16,26 +16,11 @@ jobs:
     outputs:
       repos: ${{ steps.get-org-repos.outputs.repos }}
 
-  sync:
+  add_bug_to_project:
     needs:
       - get-org-repos
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        repo: ${{ fromJson(needs.get-org-repos.outputs.repos) }}
-      fail-fast: false
-    steps:
-      - uses: actions/checkout@main
-        with:
-          repository: ${{ github.event.organization.login }}/${{ matrix.repo }}
-          token: ${{ secrets.PROJECT_PAT }}
-      - uses: amenocal/stale@main
-        with:
-          repo-token: ${{ secrets.PROJECT_PAT }}
-          repo-name: ${{ matrix.repo }}
-  add_bug_to_project:
     if: github.event_name == 'issues' && (github.event.label.name == 'bug' || contains(github.event.issue.labels.*.name, 'bug'))
-    runs-on: ubuntu-latest
     steps:
     - name: Add issue to project
       uses: actions/add-to-project@v1
