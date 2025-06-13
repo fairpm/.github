@@ -3,7 +3,7 @@ name: Bug tracker
 on:
   workflow_dispatch:
   issues:
-    types: [opened, labeled]
+    types: labeled
 
 jobs:
   get-org-repos:
@@ -20,7 +20,7 @@ jobs:
     needs:
       - get-org-repos
     runs-on: ubuntu-latest
-    if: github.event_name == 'issues' && (github.event.label.name == 'bug' || contains(github.event.issue.labels.*.name, 'bug'))
+    if: github.event.action == 'labeled' && github.event.label.name == 'bug'
     steps:
     - name: Add issue to project
       uses: actions/add-to-project@v1
