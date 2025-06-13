@@ -15,17 +15,23 @@ jobs:
         id: get-org-repos
     outputs:
       repos: ${{ steps.get-org-repos.outputs.repos }}
-
-  add_bug_to_project:
-    needs:
-      - get-org-repos
+      
+  run-for-each-repo:
+    needs: get-org-repos
     runs-on: ubuntu-latest
-    if: github.event.action == 'labeled' && github.event.label.name == 'bug'
+    strategy:
+      matrix:
+        repo: ${{ fromJson(needs.get-org-repos.outputs.repos) }}
     steps:
-    - name: Add issue to project
-      uses: actions/add-to-project@v1
-      with:
-        project-url: https://github.com/orgs/fairpm/projects/5
-        github-token: ${{ secrets.PROJECT_PAT }}
-        labeled: bug
-        
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.organization.login }}/${{ matrix.repo }}
+          token: ${{ secrets.PROJECT_PAT }}
+
+      - name: Add to Project if Label is 'bug'
+        if: contains(github.event.issue.labels.*.name, 'bug')
+        uses: actions/add-to-project@v1
+        with:
+          project-url: https://github.com/orgs/fairpm/projects/5
+          github-token: ${{ secrets.PROJECT_PAT }}
