@@ -1,6 +1,6 @@
 # Welcome to the FAIR Package Manager Project
 
-The FAIR Package Manager is an open-source initiative backed by the Linux Foundation. Our goal is to rethink how software is distributed and managed in the world of open web publishing. We focus on decentralization, transparency, and giving users more control. Our community brings together developers, infrastructure providers, and open web contributors and advocates who all share the same mission: to move away from centralized systems and empower site owners and hosting providers with greater independence.
+The FAIR (**F**ederated **a**nd **I**ndependent **R**epositories) Package Manager is an open-source initiative backed by the Linux Foundation. Our goal is to rethink how software is distributed and managed in the world of open web publishing. We focus on decentralization, transparency, and giving users more control. Our community brings together developers, infrastructure providers, and open web contributors and advocates who all share the same mission: to move away from centralized systems and empower site owners and hosting providers with greater independence.
 
 FAIR is governed through open working groups and consensus-driven processes, ensuring that its development reflects the needs of the broader community. Whether you're a contributor, a host, or an end user, FAIR invites participation at every level, from writing code and documentation, to community organisation and governance. As a community-led project, we aim to build public digital infrastructure that is both resilient and fair.
 
@@ -46,7 +46,7 @@ Hosts may also configure their own repository mirrors and toggle settings like G
 
 #### [Technical Independence](https://github.com/fairpm/fair-plugin)
 
-* Focus: Create infrastructure to provide federated implementations of the WordPress.org services.
+* Focus: Create infrastructure to provide  implementations of the WordPress.org services.
 * Includes: Mirror API server, FAIR-enabled plugin, and WP distro packaging.
 
 #### [FAIR](https://github.com/fairpm/fair-protocol)
