@@ -1,6 +1,6 @@
 # Welcome to the FAIR Package Manager Project
 
-The FAIR Package Manager is an open-source initiative backed by the Linux Foundation. Our goal is to rethink how software is distributed and managed in the world of open web publishing. We focus on decentralization, transparency, and giving users more control. Our community brings together developers, infrastructure providers, and open web contributors and advocates who all share the same mission: to move away from centralized systems and empower site owners and hosting providers with greater independence.
+The FAIR Package Manager is an open-source initiative of The FAIR Web Foundation, a Linux Foundation project. Our goal is to rethink how software is distributed and managed in the world of open web publishing. We focus on decentralization, transparency, and giving users more control. Our community brings together developers, infrastructure providers, and open web contributors and advocates who all share the same mission: to move away from centralized systems and empower site owners and hosting providers with greater independence.
 
 FAIR is governed through open working groups and consensus-driven processes, ensuring that its development reflects the needs of the broader community. Whether you're a contributor, a host, or an end user, FAIR invites participation at every level, from writing code and documentation, to community organisation and governance. As a community-led project, we aim to build public digital infrastructure that is both resilient and fair.
 
@@ -54,4 +54,4 @@ Hosts may also configure their own repository mirrors and toggle settings like G
 * Focus: Long-term development and maintenance of the FAIR protocol and related systems.
 * Includes: Protocol spec, aggregator, repository nodes, analytics, and connector plugin.
 
-<sub>The FAIR Package Manager Project is hosted by the [Linux Foundation](https://www.linuxfoundation.org/) </sub>
+<sub>The FAIR Package Manager Project is part of The FAIR Web Foundation and is hosted by the [Linux Foundation](https://www.linuxfoundation.org/) </sub>
