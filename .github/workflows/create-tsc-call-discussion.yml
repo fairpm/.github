@@ -1,0 +1,49 @@
+name: Create FAIR TSC Weekly Discussion
+
+on:
+  workflow_dispatch:  # Allows manual runs
+  schedule:
+    - cron: '0 19 * * 3'  # Every Wednesday at 19:00 UTC
+
+permissions:
+  contents: read  # Needed for repo access, even though we're using a PAT
+
+jobs:
+  post-weekly-discussion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up dynamic values
+        id: vars
+        run: |
+          # Target next day (Thursday) for meeting date
+          MEETING_DATE=$(date -u -d "tomorrow" +'%Y-%m-%d')
+          DISPLAY_DATE=$(date -u -d "tomorrow" +'%B %d, %Y')
+          TZ_LINK="https://www.timeanddate.com/worldclock/fixedtime.html?iso=${MEETING_DATE//-}T1900"
+
+          echo "date_slug=$MEETING_DATE" >> $GITHUB_OUTPUT
+          echo "date_display=$DISPLAY_DATE" >> $GITHUB_OUTPUT
+          echo "tz_link=$TZ_LINK" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Discussion
+        uses: abirismyname/create-discussion@v2.1.0
+        with:
+          github-token: ${{ secrets.DISCUSSION_PAT }}
+          category-name: General
+          title: "TSC Call Agenda - ${{ steps.vars.outputs.date_slug }}"
+          body: |
+            This discussion is for the FAIR project's TSC weekly call.
+
+            Please add agenda items as comments below and up-vote on the items you'd like to discuss.
+
+            ## Meeting details
+            * Meeting is ${{ steps.vars.outputs.date_display }} – 19:00 UTC ([see it in your time zone](${{ steps.vars.outputs.tz_link }}))
+            * [Link to Meeting Calendar](https://zoom-lfx.platform.linuxfoundation.org/meeting/95837337329?password=fd00a64e-3e89-49a9-9827-17f381443a7c)
+
+            ## How to join
+            This call is open to anyone, but note that you need to have a profile/account at [OpenProfile.dev](https://openprofile.dev/) to join the call.
+
+            ## Reminders
+
+            FAIR is part of the Linux Foundation. Meeting attendees are subject to both the [Code of Conduct](https://github.com/fairpm/tsc/blob/main/code-of-conduct.md) and the [LF Antitrust Policy](https://www.linuxfoundation.org/legal/antitrust-policy).
+
+            This meeting is recorded and publicly available via your OpenProfile.dev account.
