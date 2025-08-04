@@ -28,6 +28,7 @@ jobs:
         uses: abirismyname/create-discussion@v2.1.0
         with:
           github-token: ${{ secrets.DISCUSSION_PAT }}
+          repository-name: fairpm/tsc
           category-name: General
           title: "Tech Call Agenda - ${{ steps.vars.outputs.date_slug }}"
           body: |
