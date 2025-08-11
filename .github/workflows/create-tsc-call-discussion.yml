@@ -30,9 +30,12 @@ jobs:
           github-token: ${{ secrets.DISCUSSION_PAT }}
           repository-name: fairpm/tsc
           category-name: General
-          title: "TSC Call Agenda - ${{ steps.vars.outputs.date_slug }}"
+
+          title: "TSC General Meeting Agenda - ${{ steps.vars.outputs.date_slug }}"
           body: |
-            This discussion is for the FAIR project's TSC weekly call.
+            **Meeting Purpose:** Strategic direction, governance, policy, cross-team priorities, and project oversight.
+
+            **Audience:** FAIR TSC members & open observers (as allowed).
 
             Please add agenda items as comments below and up-vote on the items you'd like to discuss.
 
