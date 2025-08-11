@@ -40,7 +40,7 @@ jobs:
 
             ## Meeting details
             * Meeting is ${{ steps.vars.outputs.date_display }} – 17:30 UTC ([see it in your time zone](${{ steps.vars.outputs.tz_link }}))
-            * [Link to Meeting Calendar](https://zoom-lfx.platform.linuxfoundation.org/meeting/95837337329?password=fd00a64e-3e89-49a9-9827-17f381443a7c)
+            * [Link to Meeting Calendar](https://zoom-lfx.platform.linuxfoundation.org/meeting/98982564470?password=5143c55f-4b07-4914-9666-cc55daca752d)
 
             ## How to join
             This call is open to anyone, but note that you need to have a profile/account at [OpenProfile.dev](https://openprofile.dev/) to join the call.
