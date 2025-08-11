@@ -32,7 +32,9 @@ jobs:
           category-name: General
           title: "Tech Call Agenda - ${{ steps.vars.outputs.date_slug }}"
           body: |
-            This discussion is for the FAIR project's tech weekly call.
+            **Meeting Purpose:** Deep-dive, hands-on technical work & implementation for FAIR.
+
+            **Audience:** All technical contributors (not just committee members).
 
             Please add agenda items as comments below and up-vote on the items you'd like to discuss.
 
