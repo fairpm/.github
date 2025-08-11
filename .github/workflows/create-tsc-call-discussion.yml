@@ -1,12 +1,16 @@
-name: Create FAIR TSC Weekly Discussion
+name: Create FAIR TSC General Weekly Discussion
 
 on:
-  workflow_dispatch:  # Allows manual runs
+  workflow_dispatch:  # Manual runs with optional date override
+    inputs:
+      meeting_date:
+        description: 'Meeting date (YYYY-MM-DD). If omitted, uses next Thursday.'
+        required: false
   schedule:
-    - cron: '0 19 * * 3'  # Every Wednesday at 19:00 UTC
+    - cron: '5 20 * * 4'  # Every Thursday at 20:05 UTC (post next week's agenda)
 
 permissions:
-  contents: read  # Needed for repo access, even though we're using a PAT
+  contents: read
 
 jobs:
   post-weekly-discussion:
@@ -15,22 +19,54 @@ jobs:
       - name: Set up dynamic values
         id: vars
         run: |
-          # Target next day (Thursday) for meeting date
-          MEETING_DATE=$(date -u -d "tomorrow" +'%Y-%m-%d')
-          DISPLAY_DATE=$(date -u -d "tomorrow" +'%B %d, %Y')
+          # Use manual date if provided; otherwise default to NEXT Thursday.
+          if [ -n "${{ github.event.inputs.meeting_date }}" ]; then
+            MEETING_DATE="${{ github.event.inputs.meeting_date }}"
+          else
+            MEETING_DATE=$(date -u -d "next thursday" +'%Y-%m-%d')
+          fi
+
+          DISPLAY_DATE=$(date -u -d "$MEETING_DATE" +'%B %d, %Y')
           TZ_LINK="https://www.timeanddate.com/worldclock/fixedtime.html?iso=${MEETING_DATE//-}T1900"
 
           echo "date_slug=$MEETING_DATE" >> $GITHUB_OUTPUT
           echo "date_display=$DISPLAY_DATE" >> $GITHUB_OUTPUT
           echo "tz_link=$TZ_LINK" >> $GITHUB_OUTPUT
 
+      - name: Check for existing discussion
+        id: check_existing
+        env:
+          GH_TOKEN: ${{ secrets.DISCUSSION_PAT }}
+        run: |
+          TITLE="TSC General Meeting Agenda - ${{ steps.vars.outputs.date_slug }}"
+          Q="repo:fairpm/tsc is:discussion in:title \"$TITLE\""
+          RESP=$(gh api graphql -f query='
+            query($q:String!) {
+              search(query:$q, type: DISCUSSION, first: 1) {
+                discussionCount
+                edges { node { ... on Discussion { title url } } }
+              }
+            }' -f q="$Q")
+          COUNT=$(echo "$RESP" | jq -r '.data.search.discussionCount')
+          if [ "$COUNT" -gt 0 ]; then
+            URL=$(echo "$RESP" | jq -r '.data.search.edges[0].node.url')
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            echo "existing_url=$URL" >> "$GITHUB_OUTPUT"
+            echo "Found existing discussion: $URL"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+            echo "existing_url=" >> "$GITHUB_OUTPUT"
+            echo "No existing discussion found for: $TITLE"
+          fi
+
       - name: Create GitHub Discussion
+        if: ${{ steps.check_existing.outputs.found != 'true' }}
+        id: create_discussion
         uses: abirismyname/create-discussion@v2.1.0
         with:
           github-token: ${{ secrets.DISCUSSION_PAT }}
           repository-name: fairpm/tsc
           category-name: General
-
           title: "TSC General Meeting Agenda - ${{ steps.vars.outputs.date_slug }}"
           body: |
             **Meeting Purpose:** Strategic direction, governance, policy, cross-team priorities, and project oversight.
@@ -51,3 +87,21 @@ jobs:
             FAIR is part of the Linux Foundation. Meeting attendees are subject to both the [Code of Conduct](https://github.com/fairpm/tsc/blob/main/code-of-conduct.md) and the [LF Antitrust Policy](https://www.linuxfoundation.org/legal/antitrust-policy).
 
             This meeting is recorded and publicly available via your OpenProfile.dev account.
+
+      - name: Skip creation (already exists)
+        if: ${{ steps.check_existing.outputs.found == 'true' }}
+        run: echo "Discussion already exists: ${{ steps.check_existing.outputs.existing_url }} — skipping creation."
+
+      - name: Announce in Slack (success only)
+        if: ${{ steps.check_existing.outputs.found != 'true' && steps.create_discussion.outcome == 'success' && steps.create_discussion.outputs.discussion-url != '' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_FAIR_MEETING_ANNOUNCER }}
+        run: |
+          payload=$(jq -n \
+            --arg text ":spiral_calendar_pad: *TSC General Meeting Agenda Posted*\n*Date:* ${{ steps.vars.outputs.date_display }} (19:00 UTC)\n:link: <${{ steps.create_discussion.outputs.discussion-url }}|View agenda>\n:earth_americas: <${{ steps.vars.outputs.tz_link }}|See in your timezone>" \
+            '{text: $text}')
+          curl -sS -X POST -H 'Content-type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
+
+      - name: Skip Slack notification
+        if: ${{ !(steps.check_existing.outputs.found != 'true' && steps.create_discussion.outcome == 'success' && steps.create_discussion.outputs.discussion-url != '') }}
+        run: echo "Skipping Slack — duplicate or creation failed."
