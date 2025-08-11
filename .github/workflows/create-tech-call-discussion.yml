@@ -97,10 +97,22 @@ jobs:
         if: ${{ steps.check_existing.outputs.found != 'true' && steps.create_discussion.outcome == 'success' && steps.create_discussion.outputs.discussion-url != '' }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_FAIR_MEETING_ANNOUNCER }}
+          DATE_DISPLAY: ${{ steps.vars.outputs.date_display }}
+          TZ_LINK: ${{ steps.vars.outputs.tz_link }}
+          DISCUSSION_URL: ${{ steps.create_discussion.outputs.discussion-url }}
         run: |
           payload=$(jq -n \
-            --arg text ":spiral_calendar_pad: *Tech Call Agenda Posted*\n*Date:* ${{ steps.vars.outputs.date_display }} (17:30 UTC)\n:link: <${{ steps.create_discussion.outputs.discussion-url }}|View agenda>\n:earth_americas: <${{ steps.vars.outputs.tz_link }}|See in your timezone>" \
-            '{text: $text}')
+            --arg d "$DATE_DISPLAY" \
+            --arg url "$DISCUSSION_URL" \
+            --arg tz "$TZ_LINK" \
+            '{
+              blocks: [
+                { "type": "section", "text": { "type": "mrkdwn", "text": ":spiral_calendar_pad: *Tech Call Agenda Posted*" } },
+                { "type": "section", "text": { "type": "mrkdwn", "text": ("*Date:* " + $d + " (17:30 UTC)") } },
+                { "type": "section", "text": { "type": "mrkdwn", "text": (":link: <" + $url + "|View agenda>") } },
+                { "type": "section", "text": { "type": "mrkdwn", "text": (":earth_americas: <" + $tz + "|See in your timezone>") } }
+              ]
+            }')
           curl -sS -X POST -H 'Content-type: application/json' --data "$payload" "$SLACK_WEBHOOK_URL"
 
       - name: Skip Slack notification
