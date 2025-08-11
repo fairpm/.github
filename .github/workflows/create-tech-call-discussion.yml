@@ -25,6 +25,7 @@ jobs:
           echo "tz_link=$TZ_LINK" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Discussion
+        id: create_discussion
         uses: abirismyname/create-discussion@v2.1.0
         with:
           github-token: ${{ secrets.DISCUSSION_PAT }}
@@ -50,3 +51,14 @@ jobs:
             FAIR is part of the Linux Foundation. Meeting attendees are subject to both the [Code of Conduct](https://github.com/fairpm/tsc/blob/main/code-of-conduct.md) and the [LF Antitrust Policy](https://www.linuxfoundation.org/legal/antitrust-policy).
 
             This meeting is recorded and publicly available via your OpenProfile.dev account.
+      - name: Announce in Slack (success only)
+        if: ${{ success() && steps.create_discussion.outputs.discussion-url != '' }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_FAIR_MEETING_ANNOUNCER }}
+        run: |
+          payload=$(jq -n \
+            --arg text ":spiral_calendar_pad: *Tech Call Agenda Posted*\n*Date:* ${{ steps.vars.outputs.date_display }} (17:30 UTC)\n:link: <${{ steps.create_discussion.outputs.discussion-url }}|View agenda>\n:earth_americas: <${{ steps.vars.outputs.tz_link }}|See in your timezone>" \
+            '{text: $text}')
+          curl -sS -X POST -H 'Content-type: application/json' \
+            --data "$payload" \
+            "$SLACK_WEBHOOK_URL"
