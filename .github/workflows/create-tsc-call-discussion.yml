@@ -30,6 +30,7 @@ jobs:
           github-token: ${{ secrets.DISCUSSION_PAT }}
           repository-name: fairpm/tsc
           category-name: General
+
           title: "TSC General Meeting Agenda - ${{ steps.vars.outputs.date_slug }}"
           body: |
             **Meeting Purpose:** Strategic direction, governance, policy, cross-team priorities, and project oversight.
