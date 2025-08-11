@@ -90,7 +90,8 @@ jobs:
 
       - name: Skip creation (already exists)
         if: ${{ steps.check_existing.outputs.found == 'true' }}
-        run: echo "Discussion already exists: ${{ steps.check_existing.outputs.existing_url }} — skipping creation."
+        run: |
+          echo "Discussion already exists: ${{ steps.check_existing.outputs.existing_url }} — skipping creation."
 
       - name: Announce in Slack (success only)
         if: ${{ steps.check_existing.outputs.found != 'true' && steps.create_discussion.outcome == 'success' && steps.create_discussion.outputs.discussion-url != '' }}
