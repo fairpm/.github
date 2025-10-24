@@ -73,8 +73,6 @@ jobs:
 
             **Audience:** FAIR TSC members & open observers (as allowed).
 
-            Please add agenda items as comments below and up-vote on the items you'd like to discuss.
-
             ## Meeting details
             * Meeting is ${{ steps.vars.outputs.date_display }} – 19:00 UTC ([see it in your time zone](${{ steps.vars.outputs.tz_link }}))
             * [Link to Meeting Calendar](https://zoom-lfx.platform.linuxfoundation.org/meeting/95837337329?password=fd00a64e-3e89-49a9-9827-17f381443a7c)
@@ -87,6 +85,11 @@ jobs:
             FAIR is part of the Linux Foundation. Meeting attendees are subject to both the [Code of Conduct](https://github.com/fairpm/tsc/blob/main/code-of-conduct.md) and the [LF Antitrust Policy](https://www.linuxfoundation.org/legal/antitrust-policy).
 
             This meeting is recorded and publicly available via your OpenProfile.dev account.
+
+            ## Agenda
+
+            * As part of our standing agenda, we will review the [TSC Project Board](https://github.com/orgs/fairpm/projects/11) and any action items from the previous meeting.
+            * Please add your agenda items as comments to this discussion and up-vote the ones you'd
 
       - name: Skip creation (already exists)
         if: ${{ steps.check_existing.outputs.found == 'true' }}
