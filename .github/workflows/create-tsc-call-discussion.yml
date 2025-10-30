@@ -7,7 +7,7 @@ on:
         description: 'Meeting date (YYYY-MM-DD). If omitted, uses next Thursday.'
         required: false
   schedule:
-    - cron: '5 20 * * 4'  # Every Thursday at 20:05 UTC (post next week's agenda)
+    - cron: '5 18 * * 4'  # Every Thursday at 18:05 UTC (post next week's agenda)
 
 permissions:
   contents: read
@@ -27,7 +27,7 @@ jobs:
           fi
 
           DISPLAY_DATE=$(date -u -d "$MEETING_DATE" +'%B %d, %Y')
-          TZ_LINK="https://www.timeanddate.com/worldclock/fixedtime.html?iso=${MEETING_DATE//-}T1900"
+          TZ_LINK="https://www.timeanddate.com/worldclock/fixedtime.html?iso=${MEETING_DATE//-}T1700"
 
           echo "date_slug=$MEETING_DATE" >> $GITHUB_OUTPUT
           echo "date_display=$DISPLAY_DATE" >> $GITHUB_OUTPUT
@@ -74,7 +74,7 @@ jobs:
             **Audience:** FAIR TSC members & open observers (as allowed).
 
             ## Meeting details
-            * Meeting is ${{ steps.vars.outputs.date_display }} – 19:00 UTC ([see it in your time zone](${{ steps.vars.outputs.tz_link }}))
+            * Meeting is ${{ steps.vars.outputs.date_display }} – 17:00 UTC ([see it in your time zone](${{ steps.vars.outputs.tz_link }}))
             * [Link to Meeting Calendar](https://zoom-lfx.platform.linuxfoundation.org/meeting/95837337329?password=fd00a64e-3e89-49a9-9827-17f381443a7c)
 
             ## How to join
@@ -111,7 +111,7 @@ jobs:
             '{
               blocks: [
                 { "type": "section", "text": { "type": "mrkdwn", "text": ":spiral_calendar_pad: *TSC General Call Agenda Posted*" } },
-                { "type": "section", "text": { "type": "mrkdwn", "text": ("*Date:* " + $d + " (19:00 UTC)") } },
+                { "type": "section", "text": { "type": "mrkdwn", "text": ("*Date:* " + $d + " (17:00 UTC)") } },
                 { "type": "section", "text": { "type": "mrkdwn", "text": (":link: <" + $url + "|View agenda>") } },
                 { "type": "section", "text": { "type": "mrkdwn", "text": (":earth_americas: <" + $tz + "|See in your timezone>") } }
               ]
