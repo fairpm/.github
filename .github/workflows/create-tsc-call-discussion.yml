@@ -75,7 +75,8 @@ jobs:
 
             ## Meeting details
             * Meeting is ${{ steps.vars.outputs.date_display }} – 17:00 UTC ([see it in your time zone](${{ steps.vars.outputs.tz_link }}))
-            * [Link to Meeting Calendar](https://zoom-lfx.platform.linuxfoundation.org/meeting/95837337329?password=fd00a64e-3e89-49a9-9827-17f381443a7c)
+            * [Link to Join Meeting via Zoom](https://zoom-lfx.platform.linuxfoundation.org/meeting/95837337329?password=fd00a64e-3e89-49a9-9827-17f381443a7c)
+            * [Link to Calendar](https://zoom-lfx.platform.linuxfoundation.org/meetings/fair-package-manager?view=week)
 
             ## How to join
             This call is open to anyone, but note that you need to have a profile/account at [OpenProfile.dev](https://openprofile.dev/) to join the call.
