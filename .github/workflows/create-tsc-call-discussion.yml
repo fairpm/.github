@@ -1,29 +1,78 @@
-name: Create FAIR TSC General Weekly Discussion
+name: Create FAIR TSC General Monthly Discussion
 
 on:
   workflow_dispatch:  # Manual runs with optional date override
     inputs:
       meeting_date:
-        description: 'Meeting date (YYYY-MM-DD). If omitted, uses next Thursday.'
+        description: 'Meeting date (YYYY-MM-DD). If omitted, uses the next upcoming third Thursday.'
         required: false
   schedule:
-    - cron: '5 18 * * 4'  # Every Thursday at 18:05 UTC (post next week's agenda)
+    # Cron cannot express "third Thursday", so this fires every Thursday at 18:05 UTC
+    # and the gate job below stops all but the third one of the month.
+    - cron: '5 18 * * 4'
 
 permissions:
   contents: read
 
 jobs:
-  post-weekly-discussion:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      proceed: ${{ steps.check.outputs.proceed }}
+    steps:
+      - name: Only continue on the third Thursday
+        id: check
+        run: |
+          # Manual runs always proceed; the schedule is what needs filtering.
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run — proceeding."
+            exit 0
+          fi
+
+          # Cron already guarantees it is a Thursday, so days 15-21 can only be the third one.
+          DOM=$(date -u +'%-d')
+          if [ "$DOM" -ge 15 ] && [ "$DOM" -le 21 ]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            echo "Third Thursday (day $DOM) — proceeding."
+          else
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            echo "Not the third Thursday (day $DOM) — skipping."
+          fi
+
+  post-tsc-call-discussion:
+    needs: gate
+    if: ${{ needs.gate.outputs.proceed == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Set up dynamic values
         id: vars
         run: |
-          # Use manual date if provided; otherwise default to NEXT Thursday.
+          # Third Thursday of a given YYYY-MM: walk from the first Thursday, then add two weeks.
+          third_thursday() {
+            local ym="$1"
+            local first_dow offset day
+            first_dow=$(date -u -d "${ym}-01" +'%u')       # 1=Mon .. 7=Sun
+            offset=$(( (4 - first_dow + 7) % 7 ))          # days from the 1st to the first Thursday
+            day=$(( 1 + offset + 14 ))
+            printf '%s-%02d\n' "$ym" "$day"
+          }
+
+          THIS_MONTH=$(date -u +'%Y-%m')
+          NEXT_MONTH=$(date -u -d "$(date -u +'%Y-%m-01') +1 month" +'%Y-%m')
+
           if [ -n "${{ github.event.inputs.meeting_date }}" ]; then
+            # Explicit override always wins.
             MEETING_DATE="${{ github.event.inputs.meeting_date }}"
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            # Runs on the third Thursday itself, posting NEXT month's agenda.
+            MEETING_DATE=$(third_thursday "$NEXT_MONTH")
           else
-            MEETING_DATE=$(date -u -d "next thursday" +'%Y-%m-%d')
+            # Manual run with no date: the next third Thursday that has not passed yet.
+            MEETING_DATE=$(third_thursday "$THIS_MONTH")
+            if [[ "$MEETING_DATE" < "$(date -u +'%Y-%m-%d')" ]]; then
+              MEETING_DATE=$(third_thursday "$NEXT_MONTH")
+            fi
           fi
 
           DISPLAY_DATE=$(date -u -d "$MEETING_DATE" +'%B %d, %Y')
