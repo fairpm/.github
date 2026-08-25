@@ -1,0 +1,22 @@
+name: Runner probe
+
+# Temporary diagnostic: confirms this repo can obtain a GitHub-hosted runner.
+# Deliberately has no secrets, no third-party actions, and no side effects.
+# Delete once the queued-run issue is resolved.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report runner
+        run: |
+          echo "Runner reached."
+          echo "  name: $RUNNER_NAME"
+          echo "  os:   $RUNNER_OS"
+          echo "  arch: $RUNNER_ARCH"
